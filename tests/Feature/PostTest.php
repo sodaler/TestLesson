@@ -55,4 +55,18 @@ class PostTest extends TestCase
         $res->assertRedirect();
         $res->assertInvalid('title');
     }
+
+    public function test_attribute_image_is_file_for_storing_post()
+    {
+        $data = [
+            'title' => 'title',
+            'description' => 'Description',
+            'image' => 'ex_string'
+        ];
+
+        $res = $this->post('/posts', $data);
+
+        $res->assertRedirect();
+        $res->assertInvalid('image');
+    }
 }
