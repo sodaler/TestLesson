@@ -22,9 +22,9 @@ class PostTest extends TestCase
         $file = File::create('img_ex.jpg');
 
         $data = [
-          'title' => 'Some title',
-          'description' => 'Description',
-          'image' => $file
+            'title' => 'Some title',
+            'description' => 'Description',
+            'image' => $file
         ];
 
         $res = $this->post('/posts', $data);
@@ -40,5 +40,19 @@ class PostTest extends TestCase
         $this->assertEquals('images/' . $file->hashName(), $post->image_url);
 
         Storage::disk('local')->assertExists($post->image_url);
+    }
+
+    public function test_attribute_title_is_required_for_storing_post()
+    {
+        $data = [
+            'title' => '',
+            'description' => 'Description',
+            'image' => ''
+        ];
+
+        $res = $this->post('/posts', $data);
+
+        $res->assertRedirect();
+        $res->assertInvalid('title');
     }
 }

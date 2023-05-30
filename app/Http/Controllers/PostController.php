@@ -12,8 +12,12 @@ class PostController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $path = Storage::disk('local')->put('/images', $data['image']);
-        $data['image_url'] = $path;
+
+        if (!empty($data['image'])) {
+            $path = Storage::disk('local')->put('/images', $data['image']);
+            $data['image_url'] = $path;
+        }
+
         unset($data['image']);
         Post::create($data);
     }
