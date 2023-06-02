@@ -63,6 +63,19 @@ class PostTest extends TestCase
         $res->assertInvalid('title');
     }
 
+    public function test_attribute_image_is_file_for_storing_post()
+    {
+        $data = $this->validParams();
+
+        $res = $this->post('/posts', $data);
+
+        $res->assertStatus(422);
+        $res->assertInvalid('image');
+        $res->assertJsonValidationErrors([
+           'image' => 'The image field must be a file.'
+        ]);
+    }
+
 
     /**
      * Valid params for updating or creating a resource
