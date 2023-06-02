@@ -45,4 +45,9 @@ class PostController extends Controller
     {
         return view('posts.show', compact('post'));
     }
+
+    public function delete(Post $post)
+    {
+        $post->delete();
+    }
 }
