@@ -49,6 +49,8 @@ class PostTest extends TestCase
             'title' => $post->title,
             'description' => $post->description,
             'image_url' => $post->image_url,
+            'created_at' => $post->created_at->format('Y-m-d'),
+            'updated_at' => $post->updated_at->format('Y-m-d'),
         ]);
     }
 
