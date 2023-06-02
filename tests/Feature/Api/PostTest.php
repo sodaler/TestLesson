@@ -52,6 +52,28 @@ class PostTest extends TestCase
         ]);
     }
 
+    public function test_can_be_updated()
+    {
+        $this->withoutExceptionHandling();
+
+        $post = Post::factory()->create();
+        $file = File::create('img_ex.jpg');
+
+        $data = $this->validParams();
+        $data['image'] = $file;
+        $data['description'] = 'description changed';
+        $data['title'] = 'changed';
+
+        $res = $this->patch('/api/posts/' . $post->id, $data);
+
+        $res->assertJson([
+            'id' => $post->id,
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'image_url' => 'images/' . $file->hashName(),
+        ]);
+    }
+
     public function test_attribute_title_is_required_for_storing_post()
     {
         $data = $this->validParams();
