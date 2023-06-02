@@ -22,4 +22,4 @@ Route::get('/posts', [\App\Http\Controllers\Api\Post\PostController::class, 'ind
 Route::post('/posts', [\App\Http\Controllers\Api\Post\PostController::class, 'store']);
 Route::patch('/posts/{post}', [\App\Http\Controllers\Api\Post\PostController::class, 'update']);
 Route::get('/posts/{post}', [\App\Http\Controllers\Api\Post\PostController::class, 'show']);
-Route::delete('/posts/{post}', [\App\Http\Controllers\Api\Post\PostController::class, 'delete']);
+Route::delete('/posts/{post}', [\App\Http\Controllers\Api\Post\PostController::class, 'delete'])->middleware('auth');
