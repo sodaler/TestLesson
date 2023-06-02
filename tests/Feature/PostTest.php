@@ -133,6 +133,15 @@ class PostTest extends TestCase
         $this->assertDatabaseCount('posts', 0);
     }
 
+    public function test_post_can_be_deleted_by_only_auth_user()
+    {
+        $post = Post::factory()->create();
+        $res = $this->delete('/posts/' . $post->id);
+        $res->assertRedirect();
+
+        $this->assertDatabaseCount('posts', 1);
+    }
+
     /**
      * Valid params for updating or creating a resource
      *
