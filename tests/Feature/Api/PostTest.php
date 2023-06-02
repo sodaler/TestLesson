@@ -18,6 +18,9 @@ class PostTest extends TestCase
     {
         parent::setUp();
         Storage::fake('local');
+        $this->withHeaders([
+           'accept' => 'application/Json'
+        ]);
     }
 
     public function test_can_be_stored()
@@ -47,6 +50,17 @@ class PostTest extends TestCase
             'description' => $post->description,
             'image_url' => $post->image_url,
         ]);
+    }
+
+    public function test_attribute_title_is_required_for_storing_post()
+    {
+        $data = $this->validParams();
+        $data['title'] = '';
+
+        $res = $this->post('/api/posts', $data);
+
+        $res->assertStatus(422);
+        $res->assertInvalid('title');
     }
 
 
