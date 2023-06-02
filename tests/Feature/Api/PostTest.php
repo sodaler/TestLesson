@@ -120,6 +120,21 @@ class PostTest extends TestCase
         $res->assertJson($json);
     }
 
+    public function test_response_for_route_posts_show_is_view_post_show_with_single_post()
+    {
+        $this->withoutExceptionHandling();
+        $post = Post::factory()->create();
+
+        $res = $this->get('/api/posts/' . $post->id);
+
+        $res->assertJson([
+            'id' => $post->id,
+            'title' => $post->title,
+            'description' => $post->description,
+            'image_url' => $post->image_url,
+        ]);
+    }
+
 
     /**
      * Valid params for updating or creating a resource

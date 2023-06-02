@@ -47,4 +47,9 @@ class PostController extends Controller
 
         return PostResource::make($post)->resolve();
     }
+
+    public function show(Post $post)
+    {
+        return PostResource::make($post)->resolve();
+    }
 }
