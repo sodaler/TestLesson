@@ -135,6 +135,22 @@ class PostTest extends TestCase
         ]);
     }
 
+    public function test_post_can_be_deleted_by_auth_user()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::factory()->create();
+        $post = Post::factory()->create();
+        $res = $this->actingAs($user)->delete('/api/posts/' . $post->id);
+
+        $res->assertOk();
+
+        $this->assertDatabaseCount('posts', 0);
+
+        $res->assertJson([
+            'message' => 'deleted'
+        ]);
+    }
 
     /**
      * Valid params for updating or creating a resource

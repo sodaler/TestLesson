@@ -52,4 +52,13 @@ class PostController extends Controller
     {
         return PostResource::make($post)->resolve();
     }
+
+    public function delete(Post $post)
+    {
+        $post->delete();
+
+        return response()->json([
+           'message' => 'deleted'
+        ]);
+    }
 }
