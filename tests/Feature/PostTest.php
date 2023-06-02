@@ -89,10 +89,27 @@ class PostTest extends TestCase
         $res->assertInvalid('image');
     }
 
+    public function test_response_for_route_posts_index_is_view_post_index_with_posts()
+    {
+        $this->withoutExceptionHandling();
+
+        $posts = Post::factory(10)->create();
+
+        $res = $this->get('/posts');
+
+        $res->assertViewIs('posts.index');
+
+        $res->assertSeeText('View page');
+
+        $titles = $posts->pluck('title')->toArray();
+        $res->assertSeeText('View page');
+        $res->assertSeeText($titles);
+    }
+
     /**
      * Valid params for updating or creating a resource
      *
-     * @param  array  $overrides new params
+     * @param array $overrides new params
      * @return array Valid params for updating or creating a resource
      */
     private function validParams($overrides = [])
