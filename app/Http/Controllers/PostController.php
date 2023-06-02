@@ -40,4 +40,9 @@ class PostController extends Controller
         unset($data['image']);
         $post->update($data);
     }
+
+    public function show(Post $post)
+    {
+        return view('posts.show', compact('post'));
+    }
 }
